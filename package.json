@@ -11,8 +11,7 @@
     "lint": "npx eslint 'src/**/*.{ts,js,tsx}'",
     "lint:fix": "npx eslint 'src/**/*.{ts,js,tsx}' --fix",
     "prettier": "npx prettier 'src/**/*.{ts,js,tsx}' --write",
-    "prettier:check": "npx prettier 'src/**/*.{ts,js,tsx}' --check",
-    "migrate:make": "npx knex migrate:make $1 --knexfile src/db/knexfile.ts"
+    "prettier:check": "npx prettier 'src/**/*.{ts,js,tsx}' --check"
   },
   "keywords": [],
   "author": "",
