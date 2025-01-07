@@ -12,13 +12,13 @@ export default [
   {
     rules: {
       "@typescript-eslint/no-unused-vars": [
-        "warn", // Or "off" to disable entirely
+        "error",
         {
-          "argsIgnorePattern": "^_", // Ignore variables starting with "_"
-          "varsIgnorePattern": "^_", // Ignore variables starting with "_"
-          "caughtErrorsIgnorePattern": "^_" // Ignore catch error variables starting with "_"
-        }
-      ]
-    }
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_",
+        },
+      ],
+    },
   },
 ];
