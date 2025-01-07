@@ -9,4 +9,16 @@ export default [
   {languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "warn", // Or "off" to disable entirely
+        {
+          "argsIgnorePattern": "^_", // Ignore variables starting with "_"
+          "varsIgnorePattern": "^_", // Ignore variables starting with "_"
+          "caughtErrorsIgnorePattern": "^_" // Ignore catch error variables starting with "_"
+        }
+      ]
+    }
+  },
 ];

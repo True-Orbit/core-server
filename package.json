@@ -6,7 +6,12 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "start:local:db": "bash ./scripts/startLocalDB.sh",
+    "lint": "npx eslint 'src/**/*.{ts,js,tsx}'",
+    "lint:fix": "npx eslint 'src/**/*.{ts,js,tsx}' --fix",
+    "prettier": "npx prettier 'src/**/*.{ts,js,tsx}' --write",
+    "prettier:check": "npx prettier 'src/**/*.{ts,js,tsx}' --check"
   },
   "keywords": [],
   "author": "",
