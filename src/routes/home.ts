@@ -1,10 +1,11 @@
 import express from 'express';
-import { dbConnection } from '../db/connection';
+import { dbConnection } from '@/db';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  dbConnection.raw('SELECT 1')
+router.get('/', async (req, res, next) => {
+  const result = dbConnection.raw('SELECT 1');
+  console.log(result);
   res.send('Welcome to the Express Server!');
 });
 

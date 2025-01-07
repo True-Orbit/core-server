@@ -8,11 +8,13 @@
     "esModuleInterop": true,                  
     "skipLibCheck": true,                     
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/routes/*": ["./src/routes/*"],
-      "@/db/*": ["./src/db/*"],
+      "@/*": ["*"],
+      "@/routes": ["routes/index"],
+      "@/routes/*": ["routes/*"],
+      "@/db": ["db/index"],
+      "@/db/*": ["db/*"],
     },
     "typeRoots": ["./node_modules/@types", "./types"],
   }

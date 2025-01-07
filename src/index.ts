@@ -1,7 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 
-import { home } from "./routes";
+import { home } from "@/routes";
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
