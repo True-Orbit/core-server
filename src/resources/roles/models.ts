@@ -1,4 +1,4 @@
 export interface Role {
-  name: "admin" | "user";
+  name: 'admin' | 'user';
   description: string;
 }
