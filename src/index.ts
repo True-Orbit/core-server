@@ -1,10 +1,10 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 
-import { home } from "@/routes";
+import { home, users } from "@/routes";
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 
 const app: Application = express();
 
@@ -17,6 +17,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.get('/', home);
+app.get('/users', users);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
