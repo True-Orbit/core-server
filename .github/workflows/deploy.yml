@@ -1,24 +1,26 @@
-name: Automatic deploy to development
+name: Manualy deploy to environment
 
-on:
-  push:
-    branches:
-      - main
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        default: development
 
 jobs:
   build-and-push-image:
     name: Build and push
     runs-on: ubuntu-latest
-    environment: development
-
-    permissions:
-      contents: read
-      id-token: write
-
+    environment: ${{ github.event.inputs.environment }}
+    
     env: 
       AWS_IMAGE_MANAGER_ROLE: ${{ secrets.AWS_IMAGE_MANAGER_ROLE }}
       AWS_REGION: ${{ vars.AWS_REGION }}
       ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
