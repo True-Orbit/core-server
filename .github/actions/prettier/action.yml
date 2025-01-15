@@ -1,0 +1,21 @@
+name: Prettier
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8.15.1
+
+    - name: Install dependencies
+      run: pnpm install
+      shell: bash
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v4.3
+      with:
+        prettier_options: --check **/src/**/*.{ts,js,tsx}
