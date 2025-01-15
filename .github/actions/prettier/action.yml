@@ -1,0 +1,21 @@
+name: Prettier
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 23.6.0
+
+    - name: Install dependencies
+      run: npm install
+      shell: bash
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v4.3
+      with:
+        prettier_options: --check **/src/**/*.{ts,js,tsx}

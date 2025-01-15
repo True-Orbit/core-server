@@ -1,7 +1,7 @@
-import express, { Application, Request, Response, NextFunction } from "express";
-import dotenv from "dotenv";
+import express, { Application, Request, Response, NextFunction } from 'express';
+import dotenv from 'dotenv';
 
-import { home, users } from "@/routes";
+import { home, users } from '@/routes';
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).send("Something broke!");
+  res.status(500).send('Something broke!');
 });
 
 app.get('/', home);
