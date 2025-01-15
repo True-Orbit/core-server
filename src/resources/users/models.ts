@@ -1,9 +1,9 @@
 export interface tableRow {
-  id,
-  email,
-  password,
-  first_name,
-  last_name,
+  id: string;
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface User {
