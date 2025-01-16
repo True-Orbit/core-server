@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
