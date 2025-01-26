@@ -20,6 +20,6 @@
     },
     "typeRoots": ["./node_modules/@types", "./types"],
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/**/*.ts", "knexfile.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "knexfile.js"],
+  "exclude": ["node_modules", "dist", "coverage"]
 }

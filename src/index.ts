@@ -3,10 +3,11 @@ import 'module-alias/register';
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
-import { home, health, users } from '@/routes';
+import { home, health, users, smurf } from '@/routes/index';
+console.log('alsk: ', smurf);
 dotenv.config();
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 4000;
 
 const app: Application = express();
 
