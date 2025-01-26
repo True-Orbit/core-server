@@ -7,7 +7,7 @@
     "@": "./src"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node -r tsconfig-paths/register dist/src/index.js",
     "test": "jest",
     "dev": "nodemon --inspect=127.0.0.1:9231 --verbose --config nodemon.json",

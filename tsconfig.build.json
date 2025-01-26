@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          
+    "module": "nodenext",                      
+    "outDir": "./dist",                         
+    "strict": true,                           
+    "esModuleInterop": true,                  
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": "./",
+    "types": ["jest"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/routes": ["./src/routes/index"],
+      "@/routes/*": ["./src/routes/*"],
+      "@/db": ["./src/db/index"],
+      "@/db/*": ["./src/db/*"],
+    },
+    "typeRoots": ["./node_modules/@types", "./types"],
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "knexfile.js"],
+  "exclude": ["node_modules", "dist", "coverage"]
+}
