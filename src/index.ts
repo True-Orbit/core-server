@@ -19,9 +19,9 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
-for(const [name, route] of Object.entries(routes)) {
-  app.use(`/${name}`, route)
-};
+for (const [name, route] of Object.entries(routes)) {
+  app.use(`/${name}`, route);
+}
 
 app.use('*', (req, res) => {
   res.status(404).send('Route not found');
