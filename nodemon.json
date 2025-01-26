@@ -1,6 +1,6 @@
 {
   "watch": ["src"],
   "ext": "ts",
-  "exec": "ts-node -r tsconfig-paths/register ./src/index.ts",
+  "exec": "ts-node -r tsconfig-paths/register --inspect=127.0.0.1:9231 ./src/index.ts",
   "ignore": ["dist"]
 }

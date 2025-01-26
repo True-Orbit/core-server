@@ -3,7 +3,7 @@ import 'module-alias/register';
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
-import { home, users } from '@/routes';
+import { home, health, users } from '@/routes';
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
@@ -19,6 +19,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 });
 
 app.get('/', home);
+app.get('/health', health);
 app.get('/users', users);
 
 app.listen(PORT, () => {
