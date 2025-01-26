@@ -2,9 +2,12 @@
   "name": "express-ts-server",
   "version": "1.0.0",
   "description": "An Express server written in TypeScript",
-  "main": "./src/index.js",
+  "main": "dist/src/index.js",
   "_moduleAliases": {
-    "@": "./src"
+    "@": "dist/src"
+  },
+  "exports": {
+    "import": "./src/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
