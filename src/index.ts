@@ -3,7 +3,8 @@ import 'module-alias/register';
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
-import { home, health, users } from '@/routes/index';
+import * as routes from '@/routes';
+
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
@@ -18,9 +19,13 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
-app.get('/', home);
-app.get('/health', health);
-app.get('/users', users);
+for (const [name, route] of Object.entries(routes)) {
+  app.use(`/${name}`, route);
+}
+
+app.use('*', (req, res) => {
+  res.status(404).send('Route not found');
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -1,3 +1,4 @@
+import { Knex } from 'knex';
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -9,7 +10,7 @@ const seeds = {
   directory: './src/db/seeds',
 };
 
-const config = {
+const config: { [key: string]: Knex.Config } = {
   local: {
     client: process.env.DB_CLIENT,
     connection: {
@@ -24,4 +25,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;
