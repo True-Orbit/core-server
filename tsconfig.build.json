@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",                          
     "module": "nodenext",                      
-    "outDir": "dist",                         
+    "outDir": "./dist",                         
     "strict": true,                           
     "esModuleInterop": true,                  
     "skipLibCheck": true,                     
@@ -20,6 +20,6 @@
     },
     "typeRoots": ["./node_modules/@types", "./types"],
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "knexfile.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "knexfile.js"],
   "exclude": ["node_modules", "dist", "coverage"]
 }

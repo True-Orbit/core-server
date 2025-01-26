@@ -6,11 +6,14 @@
   "_moduleAliases": {
     "@": "dist/src"
   },
+  "exports": {
+    "import": "./src/index.js"
+  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "start": "node -r tsconfig-paths/register dist/src/index.js",
     "test": "jest",
-    "dev": "nodemon",
+    "dev": "nodemon --inspect=127.0.0.1:9231 --verbose --config nodemon.json",
     "start:local:db": "bash ./scripts/startLocalDB.sh",
     "lint": "npx eslint 'src/**/*.{ts,js,tsx}'",
     "lint:fix": "npx eslint 'src/**/*.{ts,js,tsx}' --fix",
