@@ -2,6 +2,7 @@ import 'module-alias/register';
 
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 import * as routes from '@/routes';
 
@@ -13,6 +14,8 @@ const app: Application = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
+
+app.use(morgan('tiny'));
 
 app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
