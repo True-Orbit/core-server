@@ -1,0 +1,22 @@
+name: trigger_deploy
+description: Trigger terraform to deploy the latest image to ECS
+
+inputs:
+  image_tag:
+    description: 'The image tag to deploy'
+    required: true
+  access_token:
+    description: 'The access token to trigger the deployment'
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v3
+      with:
+        token: ${{ inputs.access_token }}
+        repository: True-Orbit/infrastructure
+        event-type: deploy_core_server
+        client-payload: '{ "image_tag": "${{ inputs.image_tag }}" }'

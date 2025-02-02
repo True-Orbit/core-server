@@ -1,4 +1,4 @@
-name: Manualy deploy to environment
+name: Manually deploy tagged release
 
 on: 
   workflow_dispatch:
@@ -7,21 +7,43 @@ on:
         required: true
         default: development
 
+env:
+  DEPLOYER: ${{ github.actor }}
+  IMAGE_TAG: "${{ github.ref_name }}-${{ github.sha }}"
+
 jobs:
-  build-and-push-image:
+  build_push_image:
     name: Build and push
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     
     env: 
       AWS_IMAGE_MANAGER_ROLE: ${{ secrets.AWS_IMAGE_MANAGER_ROLE }}
       AWS_REGION: ${{ vars.AWS_REGION }}
       ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-
+      
     permissions:
       contents: read
       id-token: write
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/build_push_image
+
+      - name: build and push image
+        uses: ./.github/actions/build_push_image
+        with:
+          image_tag: ${{ env.IMAGE_TAG }}
+  
+  trigger_deploy:
+    needs: build_push_image
+    name: Trigger deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Trigger deploy
+        uses: ./.github/actions/trigger_deploy
+        with:
+          image_tag: ${{ env.IMAGE_TAG }}
+          access_token: ${{ secrets.INFRASTRUCTURE_ACCESS_TOKEN }}
