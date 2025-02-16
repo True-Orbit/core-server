@@ -1,5 +1,5 @@
 name: build_push_image
-description: Build and push image to Amazon ECR. Then trigger terraform
+description: Build and push image to Amazon ECR
 
 inputs:
   image_tag:
