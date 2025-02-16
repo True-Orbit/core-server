@@ -8,7 +8,7 @@ import * as routes from '@/routes';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4000;
+const PORT: number = parseInt(process.env.PORT as string) || 4000;
 
 const app: Application = express();
 
@@ -30,6 +30,6 @@ app.use('*', (req, res) => {
   res.status(404).send('Route not found');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);
 });
