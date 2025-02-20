@@ -5,7 +5,7 @@ A webpack server using knex to connect to a dockerized pgdb
 
 ## Requirements
   - docker
-  - npm
+  - npm 11.1.0
 
 ## Install
   - npm install
