@@ -43,6 +43,9 @@ COPY --from=builder /app/dist ./
 COPY --from=builder /app/knexfile.ts ./
 COPY --from=builder /app/tsconfig.json ./
 
+COPY ./scripts ./scripts
+COPY ./config ./config
+
 EXPOSE 4000
 
 CMD ["npm", "start"]
