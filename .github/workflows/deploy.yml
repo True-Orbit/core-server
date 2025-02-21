@@ -44,6 +44,20 @@ jobs:
       
       - name: Trigger deploy
         uses: ./.github/actions/trigger_deploy
+        env: 
+          RDS_DEVELOPMENT_SECRETS: ${{ secrets.RDS_DEVELOPMENT_SECRETS }}
+          CORE_SERVER_SECRETS: ${{ secrets.AWS_SECRETS_ARN }}
         with:
           image_tag: ${{ env.IMAGE_TAG }}
           access_token: ${{ secrets.INFRASTRUCTURE_ACCESS_TOKEN }}
+          secrets: |
+            '[
+              {
+                "name": "RDS_DEVELOPMENT_SECRETS",
+                "valueFrom": "$RDS_DEVELOPMENT_SECRETS"
+              },
+              {
+                "name": "CORE_SERVER_SECRETS",
+                "valueFrom": "$CORE_SERVER_SECRETS"
+              }
+            ]'

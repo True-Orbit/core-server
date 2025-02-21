@@ -13,6 +13,8 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
+RUN npm install -g npm@11.1.0
+
 COPY package*.json ./
 
 RUN npm ci
@@ -40,6 +42,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./
 COPY --from=builder /app/knexfile.ts ./
 COPY --from=builder /app/tsconfig.json ./
+
+COPY ./scripts ./scripts
+COPY ./config ./config
 
 EXPOSE 4000
 
