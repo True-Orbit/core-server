@@ -22,7 +22,6 @@ const fs = require('fs');
 const fsPromise = fs.promises;
 const path = require('path');
 
-const __dirname = path.resolve();
 const args = process.argv.slice(2);
 const secretsMapLocation = args[0] || './config/secretsMap.json';
 const secretsMapFile = path.join(__dirname, secretsMapLocation);
