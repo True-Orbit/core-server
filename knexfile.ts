@@ -1,7 +1,10 @@
+import fs from 'fs';
 import { type Knex } from 'knex';
 
 import dotenv from "dotenv";
 dotenv.config();
+
+const caCert = fs.readFileSync(process.env.RDS_PEM_LOCATION || '', 'utf8');
 
 const migrations = {
   directory: './src/db/migrations',
@@ -31,7 +34,7 @@ const config: { [key: string]: Knex.Config } = {
     client: process.env.DB_CLIENT,
     connection: {
       ...connection,
-      ssl: { rejectUnauthorized: false } // Enable SSL
+      ssl: { ca: caCert },
     },
     pool: { min: 2, max: 10 },
     migrations,
