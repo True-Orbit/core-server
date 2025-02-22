@@ -49,7 +49,7 @@ jobs:
           image_tag: ${{ env.IMAGE_TAG }}
           access_token: ${{ secrets.INFRASTRUCTURE_ACCESS_TOKEN }}
           secrets: |
-            '[
+            [
               {
                 "name": "RDS_DEVELOPMENT_SECRETS",
                 "valueFrom": "${{ vars.RDS_DEVELOPMENT_SECRETS }}"
@@ -58,4 +58,4 @@ jobs:
                 "name": "CORE_SERVER_SECRETS",
                 "valueFrom": "${{ vars.AWS_SECRETS_ARN }}"
               }
-            ]'
+            ]
