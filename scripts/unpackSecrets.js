@@ -18,8 +18,9 @@
  *  if envName is undefined, it be set to awsName
  */
 
-import fs, { promises as fsPromise } from 'fs';
-import path from 'path';
+const fs = require('fs');
+const fsPromise = fs.promises;
+const path = require('path');
 
 const __dirname = path.resolve();
 const args = process.argv.slice(2);
