@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "start": "node ./scripts/unpackSecrets.js && node -r tsconfig-paths/register src/index.js",
+    "start": "chmod +x ./scripts/unpackSecrets.sh && source ./scripts/unpackSecrets.sh && node -r tsconfig-paths/register src/index.js",
     "test": "jest",
     "dev": "nodemon --inspect=127.0.0.1:9231 --verbose --config nodemon.json",
     "start:local:db": "bash ./scripts/startLocalDB.sh",
