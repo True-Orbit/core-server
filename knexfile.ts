@@ -37,8 +37,6 @@ const config: { [key: string]: Knex.Config } = {
       ssl: { ca: caCert },
     },
     pool: { min: 2, max: 10 },
-    migrations,
-    seeds,
   }
 };
 
