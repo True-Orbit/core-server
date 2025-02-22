@@ -58,7 +58,7 @@ const setEnvVars = (secretsMapArray) => {
       if (!value) throw `Value for ${awsName} not found in secret`;
   
       process.env[envName ?? awsName] = value;
-      console.log('Setting env var: ', envName ?? awsName)
+      console.log('Setting env var: ', envName ?? awsName, ": ", value)
     }
   }
   
