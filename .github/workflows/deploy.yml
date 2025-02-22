@@ -38,6 +38,7 @@ jobs:
     needs: build_push_image
     name: Trigger deploy
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
 
     steps:
       - uses: actions/checkout@v4
