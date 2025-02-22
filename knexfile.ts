@@ -29,7 +29,11 @@ const config: { [key: string]: Knex.Config } = {
 
   development: {
     client: process.env.DB_CLIENT,
-    connection,
+    connection: {
+      ...connection,
+      ssl: { rejectUnauthorized: false } // Enable SSL
+    },
+    pool: { min: 2, max: 10 },
     migrations,
     seeds,
   }
