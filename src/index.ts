@@ -23,7 +23,7 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
 });
 
 for (const [name, route] of Object.entries(routes)) {
-  app.use(`/${name}`, route);
+  app.use(`/api/${name}`, route);
 }
 
 app.use('*', (req, res) => {
