@@ -1,12 +1,8 @@
 import knex from 'knex';
-
 import dotenv from 'dotenv';
-
 dotenv.config();
 
-console.log('cwd: ', process.cwd());
-
-import config from '../../knexfile';
+import config from '@/root/knexfile';
 
 const env = process.env.NODE_ENV || 'local';
 

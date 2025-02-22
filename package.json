@@ -4,6 +4,7 @@
   "description": "An Express server written in TypeScript",
   "main": "./src/index.js",
   "_moduleAliases": {
+    "@/root": "./",
     "@": "./src"
   },
   "exports": {

@@ -12,7 +12,10 @@
     "baseUrl": "./",
     "types": ["jest"],
     "paths": {
-      "@/*": ["./src/*"],
+      "@/root": ["./"],
+      "@/root/*": ["./*"],
+      "@/resources": ["./src/resources/index"],
+      "@/resources/*": ["./src/resources/*"],
       "@/routes": ["./src/routes/index"],
       "@/routes/*": ["./src/routes/*"],
       "@/db": ["./src/db/index"],
