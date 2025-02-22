@@ -28,7 +28,8 @@
 
 # Determine the location of the secrets map file.
 script_dir="$(dirname "$0")"
-secretsMapLocation=${1:-"$script_dir/../config/secretsMap.json"}
+echo "script_dir: $script_dir"
+secretsMapLocation=${1:-"$script_dir/config/secretsMap.json"}
 
 if [ ! -f "$secretsMapLocation" ]; then
   echo "Secrets map file not found at: $secretsMapLocation"
