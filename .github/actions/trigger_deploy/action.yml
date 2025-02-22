@@ -3,10 +3,13 @@ description: Trigger terraform to deploy the latest image to ECS
 
 inputs:
   image_tag:
-    description: 'The image tag to deploy'
+    description: The image tag to deploy
     required: true
   access_token:
-    description: 'The access token to trigger the deployment'
+    description: The access token to trigger the deployment
+    required: true
+    secrets:
+    description: The secret's arns to pass to the deployment
     required: true
 
 runs:
@@ -19,4 +22,4 @@ runs:
         token: ${{ inputs.access_token }}
         repository: True-Orbit/infrastructure
         event-type: deploy_core_server
-        client-payload: '{ "image_tag": "${{ inputs.image_tag }}" }'
+        client-payload: '{ "image_tag": "${{ inputs.image_tag }}", "secrets": ${{ inputs.secrets }} }'
