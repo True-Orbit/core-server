@@ -8,7 +8,7 @@ inputs:
   access_token:
     description: The access token to trigger the deployment
     required: true
-    secrets:
+  secrets:
     description: The secret's arns to pass to the deployment
     required: true
 
