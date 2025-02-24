@@ -29,7 +29,7 @@ RUN ls -la
 
 FROM node:21.7.3-alpine AS runner
 
-RUN apk add --no-cache nodejs npm jq curl npx
+RUN apk add --no-cache nodejs npm jq curl
 
 WORKDIR /app
 
