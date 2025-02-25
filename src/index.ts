@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 import * as routes from '@/routes';
-import { errorHandler } from "@/middleware"
+import { errorHandler } from '@/middleware';
 
 dotenv.config();
 
