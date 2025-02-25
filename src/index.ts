@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 import * as routes from '@/routes';
+import { errorHandler } from "@/middleware"
 
 dotenv.config();
 
@@ -29,6 +30,8 @@ for (const [name, route] of Object.entries(routes)) {
 app.use('*', (req, res) => {
   res.status(404).send('Route not found');
 });
+
+app.use(errorHandler);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);

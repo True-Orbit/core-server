@@ -16,6 +16,8 @@
       "@/root/*": ["./*"],
       "@/resources": ["./src/resources/index"],
       "@/resources/*": ["./src/resources/*"],
+      "@/middleware": ["./src/middleware/index"],
+      "@/middleware/*": ["./src/middleware/*"],
       "@/routes": ["./src/routes/index"],
       "@/routes/*": ["./src/routes/*"],
       "@/db": ["./src/db/index"],
