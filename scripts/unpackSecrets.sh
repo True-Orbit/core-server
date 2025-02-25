@@ -17,5 +17,3 @@ if [ -n "$CORE_SERVER_SECRETS" ]; then
 fi
 
 echo "$port"
-
-source ./setDbEnvs.sh
