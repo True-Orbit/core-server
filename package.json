@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "start": "source ./scripts/unpackSecrets.sh && source ./scripts/setDBEnvs.sh && node -r tsconfig-paths/register src/index.js",
+    "start": "source ./scripts/unpackSecrets.sh && source ./scripts/setDbEnvs.sh && node -r tsconfig-paths/register src/index.js",
     "unpackSecrets": "source ./scripts/unpackSecrets.sh",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
