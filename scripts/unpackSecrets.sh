@@ -18,4 +18,4 @@ fi
 
 echo "$port"
 
-source ./scripts/setDbEnvs.sh
+source ./setDbEnvs.sh
