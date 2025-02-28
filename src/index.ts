@@ -1,6 +1,6 @@
 import 'module-alias/register';
 
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application } from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 
@@ -23,7 +23,7 @@ for (const [name, route] of Object.entries(routes)) {
   app.use(`/api/${name}`, route);
 }
 
-app.use('*', (req, res) => {
+app.use('*', (_req, res) => {
   res.status(404).send('Route not found');
 });
 

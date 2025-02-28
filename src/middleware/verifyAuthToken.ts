@@ -3,8 +3,6 @@ import { getTokenData } from '@/utils'
 import { models as accessTokenModels } from '@/resources/accessTokens'
 
 const verifyToken: RequestHandler = async (req, res, next) => {
-  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
-
   const bearerHeader = req.headers['authorization'];
   
   if (typeof bearerHeader !== 'undefined') {
@@ -13,6 +11,9 @@ const verifyToken: RequestHandler = async (req, res, next) => {
     const user: accessTokenModels.Data = getTokenData(bearerToken);
     req.user = user;
     next();
+  } else if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+    req.user = undefined;
+    next(); 
   } else {
     // Forbidden
     res.status(401).json({ message: 'Authentication token is required' });
