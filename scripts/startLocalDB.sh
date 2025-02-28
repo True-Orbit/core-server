@@ -9,7 +9,7 @@ echo "DB_PASSWORD: $DB_PASSWORD"
 echo "DB_NAME: $DB_NAME"
 echo "DB_PORT: $DB_PORT"
 
-docker run --name postgres-local \
+docker run --name local-core-db \
   -e POSTGRES_USER=$DB_USER \
   -e POSTGRES_PASSWORD=$DB_PASSWORD \
   -e POSTGRES_DB=$DB_NAME \

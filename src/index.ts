@@ -13,15 +13,9 @@ const PORT: number = parseInt(process.env.PORT as string) || 4000;
 
 const app: Application = express();
 
-// Middleware to parse JSON requests
 app.use(express.json());
 
 app.use(morgan('tiny'));
-
-app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 
 for (const [name, route] of Object.entries(routes)) {
   app.use(`/api/${name}`, route);
