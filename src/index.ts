@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 import * as routes from '@/routes';
-import { errorHandler } from '@/middleware';
+import { errorHandler, verifyAuthToken } from '@/middleware';
 
 dotenv.config();
 
@@ -16,6 +16,8 @@ const app: Application = express();
 app.use(express.json());
 
 app.use(morgan('tiny'));
+
+app.use(verifyAuthToken);
 
 for (const [name, route] of Object.entries(routes)) {
   app.use(`/api/${name}`, route);
