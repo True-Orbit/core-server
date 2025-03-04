@@ -3,9 +3,10 @@ import 'module-alias/register';
 import express, { Application } from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 
 import * as routes from '@/routes';
-import { errorHandler, verifyAuthToken } from '@/middleware';
+import { errorHandler } from '@/middleware';
 
 dotenv.config();
 
@@ -13,11 +14,9 @@ const PORT: number = parseInt(process.env.PORT as string) || 4000;
 
 const app: Application = express();
 
-app.use(express.json());
-
 app.use(morgan('tiny'));
-
-app.use(verifyAuthToken);
+app.use(express.json());
+app.use(cookieParser());
 
 for (const [name, route] of Object.entries(routes)) {
   app.use(`/api/${name}`, route);

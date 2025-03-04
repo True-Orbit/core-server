@@ -1,9 +1,11 @@
 import { models as accessTokenModels } from '@/resources/accessTokens';
+import { MODELS as serviceModels } from '@/resources/service';
 
 declare global {
   namespace Express {
     interface Request {
-      user?: accessTokenModels.Data;
+      authUser?: accessTokenModels.Data;
+      service?: serviceModels.Service;
     }
   }
 }
