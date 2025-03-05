@@ -17,8 +17,9 @@ router.get('/me', requireUserAuth, async (req, res, _next) => {
 });
 
 router.post('/create', requireApiAuth, async (req, res, _next) => {
-  const { authId } = req.body;
-  const user = await dbConnection('users').insert({ authId });
+  const { authId: auth_id } = req.body;
+  console.log('req.body: ', req.body)
+  const user = await dbConnection('users').insert({ auth_id }).returning('*');
   res.send(user);
 });
 

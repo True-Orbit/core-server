@@ -6,8 +6,8 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('auth_id').notNullable().index().unique();
     table.string('profile_url').index().unique();
     table.string('handle').index().unique();
-    table.string('first_name').notNullable();
-    table.string('last_name').notNullable();
+    table.string('first_name');
+    table.string('last_name');
     table.string('avatar_url');
     table.timestamps(true, true);
   });

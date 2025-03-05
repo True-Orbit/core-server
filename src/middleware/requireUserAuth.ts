@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
+import * as jwt from 'jsonwebtoken';
+
 import { models as accessTokenModels, ACCESS_TOKEN_COOKIE_NAME } from '@/resources/accessTokens'
 
-const jwt = require('jsonwebtoken');
 const AUTH_SECRET = process.env.AUTH_SECRET!
 
 export const requireUserAuth = (req: Request, res: Response, next: NextFunction) => {
@@ -12,7 +13,7 @@ export const requireUserAuth = (req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const decoded: accessTokenModels.Data = jwt.verify(token, AUTH_SECRET);
+    const decoded: accessTokenModels.Data = jwt.verify(token, AUTH_SECRET) as accessTokenModels.Data;
     req.authUser = decoded;
 
     next();
