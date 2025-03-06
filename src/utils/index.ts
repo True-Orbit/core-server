@@ -1,2 +1,2 @@
-export * from "./getTokenData";
-export * from "./catchErrors";
+export * from './getTokenData';
+export * from './catchErrors';

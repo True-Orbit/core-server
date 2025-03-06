@@ -7,11 +7,10 @@ export const requireApiAuth = async (req: Request, res: Response, next: NextFunc
     return res.status(401).json({ error: 'API key missing' });
   } else {
     try {
-      const service = await dbConnection('services').where({ api_key }).first();
       req.service = await dbConnection('services').where({ api_key }).first();
       next();
     } catch (err) {
-      console.error(err)
+      console.error(err);
       return res.status(401).json({ error: 'Invalid API key' });
     }
   }
