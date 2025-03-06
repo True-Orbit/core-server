@@ -1,11 +1,51 @@
 import express from 'express';
 import { dbConnection } from '@/db';
+import { requireUserAuth, requireApiAuth } from '@/middleware';
+import { catchErrors } from '@/utils';
 
 const router = express.Router();
 
-router.get('', async (req, res, _next) => {
-  const result = await dbConnection.raw('SELECT * from users');
-  res.send(result.rows);
-});
+router.get(
+  '/me',
+  requireUserAuth,
+  catchErrors(async (req, res, _next) => {
+    const auth_id = req.authUser!.id;
+    const user = await dbConnection('users').where({ auth_id }).first();
+    res.send({ ...user, role: req.authUser!.role });
+  }),
+);
+
+router.get(
+  '/:id',
+  requireUserAuth,
+  catchErrors(async (req, res, _next) => {
+    const id = req.params.id;
+    const user = await dbConnection('users').where({ id }).first();
+    res.send(user);
+  }),
+);
+
+router.post(
+  '/create',
+  requireApiAuth,
+  catchErrors(async (req, res, _next) => {
+    const { authId: auth_id } = req.body;
+    const user = await dbConnection('users').insert({ auth_id }).returning('*');
+    res.send(user);
+  }),
+);
+
+router.patch(
+  '/:id',
+  requireUserAuth,
+  catchErrors(async (req, res, _next) => {
+    const id = req.params.id;
+    const authUser = req.authUser!;
+    if (authUser.id !== id) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+    // const { authId } = req.body;
+  }),
+);
 
 export default router;
