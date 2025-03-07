@@ -1,19 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 
-import { models as accessTokenModels, ACCESS_TOKEN_COOKIE_NAME } from '@/resources/accessTokens';
+import { models as accessTokenModels } from '@/resources/accessTokens';
 
 const AUTH_SECRET = process.env.AUTH_SECRET!;
 
 export const requireUserAuth = (req: Request, res: Response, next: NextFunction) => {
-  const authToken: string = req.cookies?.[ACCESS_TOKEN_COOKIE_NAME];
+  const authHeader = req.headers.authorization;
 
-  if (!authToken) {
+  if (!(authHeader && authHeader.startsWith('Bearer '))) {
     return res.status(401).json({ error: 'Authentication token missing' });
   }
+  const accessToken = authHeader.split(' ')[1];
 
   try {
-    const decoded: accessTokenModels.Data = jwt.verify(authToken, AUTH_SECRET) as accessTokenModels.Data;
+    const decoded: accessTokenModels.Data = jwt.verify(accessToken, AUTH_SECRET) as accessTokenModels.Data;
     req.authUser = decoded;
 
     next();
