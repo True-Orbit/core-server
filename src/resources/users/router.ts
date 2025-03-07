@@ -39,12 +39,8 @@ router.patch(
   '/:id',
   requireUserAuth,
   catchErrors(async (req, res, _next) => {
-    const id = req.params.id;
-    const authUser = req.authUser!;
-    if (authUser.id !== id) {
-      return res.status(403).json({ message: 'Forbidden' });
-    }
-    // const { authId } = req.body;
+    const user = await dbConnection('users').update(req.body).returning('*');
+    res.send(user);
   }),
 );
 
