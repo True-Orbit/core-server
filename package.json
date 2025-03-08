@@ -29,11 +29,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@casl/ability": "^6.7.3",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
+    "lodash": "^4.17.21",
     "module-alias": "^2.2.3",
     "morgan": "^1.10.0",
     "pg": "^8.13.1"
@@ -45,6 +47,7 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/lodash": "^4.17.16",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.4.2",
     "@types/pg": "^8.11.10",

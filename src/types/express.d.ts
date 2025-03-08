@@ -6,6 +6,9 @@ declare global {
     interface Request {
       authUser?: accessTokenModels.Data;
       service?: serviceModels.Service;
+      body: {
+        user?: serviceModels.User;
+      };
     }
   }
 }
