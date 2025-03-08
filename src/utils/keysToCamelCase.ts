@@ -1,11 +1,12 @@
 import { camelCase, isNil } from 'lodash';
 
 interface AnyObject {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
 export const keysToCamelCase = (object: AnyObject): AnyObject => {
-  if (!isNil(object) && typeof object !== 'object' || Array.isArray(object)) {
+  if ((!isNil(object) && typeof object !== 'object') || Array.isArray(object)) {
     throw new Error('keysToCamelCase only accepts objects');
   }
   return Object.entries(object).reduce((acc, [key, value]) => {

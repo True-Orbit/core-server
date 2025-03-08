@@ -8,7 +8,7 @@ const AUTH_SECRET = process.env.AUTH_SECRET!;
 export const requireUserAuth = (req: Request, res: Response, next: NextFunction) => {
   console.log('requireUserAuth cookies', req.cookies);
   const accessToken = req.cookies.accessToken;
-  
+
   try {
     const decoded: accessTokenModels.Data = jwt.verify(accessToken, AUTH_SECRET) as accessTokenModels.Data;
     req.authUser = decoded;
