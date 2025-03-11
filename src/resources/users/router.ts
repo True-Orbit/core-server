@@ -41,7 +41,7 @@ router.patch(
   requireUserAuth,
   catchErrors(async (req, res, _next) => {
     const dbConformed = keysToSnakeCase(req.body.user);
-    const user = await dbConnection('users').update(dbConformed).returning('*');
+    const [user] = await dbConnection('users').update(dbConformed).returning('*');
     const jsonConformed = keysToCamelCase(user);
     res.send(jsonConformed);
   }),
