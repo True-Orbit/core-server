@@ -51,11 +51,15 @@ jobs:
           secrets: |
             [
               {
-                "name": "RDS_DEVELOPMENT_SECRETS",
-                "valueFrom": "${{ vars.RDS_DEVELOPMENT_SECRETS }}"
+                "name": "RDS_SECRETS",
+                "valueFrom": "${{ vars.RDS_SECRETS }}"
               },
               {
                 "name": "CORE_SERVER_SECRETS",
-                "valueFrom": "${{ vars.AWS_SECRETS_ARN }}"
+                "valueFrom": "${{ vars.CORE_SERVER_SECRETS }}"
+              },
+              {
+                "name": "ORG_SECRETS", 
+                "valueFrom": "${{ vars.ORG_SECRETS }}"
               }
             ]

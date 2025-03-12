@@ -1,9 +1,17 @@
 #!/bin/bash
 
-if [ -n "$RDS_DEVELOPMENT_SECRETS" ]; then
-  echo "Parsing WEB_SERVICE_SECRETS and exporting variables..."
+if [ -n "$ORG_SECRETS" ]; then
+  echo "Parsing ORG_SECRETS and exporting variables..."
   eval "$(
-    echo "$RDS_DEVELOPMENT_SECRETS" \
+    echo "$ORG_SECRETS" \
+      | jq -r 'to_entries | map("export " + .key + "=" + (.value|@sh)) | .[]'
+  )"
+fi
+
+if [ -n "$RDS_SECRETS" ]; then
+  echo "Parsing RDS_SECRETS and exporting variables..."
+  eval "$(
+    echo "$RDS_SECRETS" \
       | jq -r 'to_entries | map("export " + .key + "=" + (.value|@sh)) | .[]'
   )"
 fi
