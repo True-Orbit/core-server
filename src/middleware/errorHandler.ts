@@ -7,8 +7,7 @@ export const errorHandler = (err: HandledError, _req: Request, res: Response, ne
 
   res.status(err.status || 500).json({
     error: {
-      message: err.message || 'Internal Server Error'
-    }
+      message: err.message || 'Internal Server Error',
+    },
   });
-}
-
+};
