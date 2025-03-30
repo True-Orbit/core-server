@@ -1,7 +1,11 @@
 import express from 'express';
+import { changeKeys } from '@/utils';
+
 import { dbConnection } from '@/db';
-import { requireUserAuth, requireApiAuth } from '@/middleware';
-import { catchErrors, keysToSnakeCase, keysToCamelCase } from '@/utils';
+import { requireUserAuth, requireApiAuth, sanitize } from '@/middleware';
+import { catchErrors } from '@/utils';
+
+import { patchFields } from '.';
 
 const router = express.Router();
 
@@ -11,7 +15,7 @@ router.get(
   catchErrors(async (req, res, _next) => {
     const auth_id = req.authUser!.id;
     const dbUser = await dbConnection('users').where({ auth_id }).first();
-    const user = keysToCamelCase({ ...dbUser, role: req.authUser!.role });
+    const user = changeKeys({ ...dbUser, role: req.authUser!.role }, 'camelCase');
     res.send(user);
   }),
 );
@@ -39,10 +43,11 @@ router.post(
 router.patch(
   '/:id',
   requireUserAuth,
+  sanitize({ allowed: patchFields, object: 'user'}),
   catchErrors(async (req, res, _next) => {
-    const dbConformed = keysToSnakeCase(req.body.user);
+    const dbConformed = changeKeys(req.sanitized.user, 'snakeCase');
     const [user] = await dbConnection('users').update(dbConformed).returning('*');
-    const jsonConformed = keysToCamelCase(user);
+    const jsonConformed = changeKeys(user, 'camelCase');
     res.send(jsonConformed);
   }),
 );
