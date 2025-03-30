@@ -46,6 +46,7 @@ router.patch(
   sanitize({ allowed: patchFields, object: 'user'}),
   catchErrors(async (req, res, _next) => {
     const dbConformed = changeKeys(req.sanitized.user, 'snakeCase');
+    console.log('dbConformed', dbConformed);
     const [user] = await dbConnection('users').update(dbConformed).returning('*');
     const jsonConformed = changeKeys(user, 'camelCase');
     res.send(jsonConformed);

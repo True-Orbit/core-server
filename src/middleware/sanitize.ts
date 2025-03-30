@@ -17,14 +17,10 @@ export const sanitize = ({ allowed, object }: Props) => (req: Request, res: Resp
   if (!(sourceObj && typeof sourceObj === 'object')) {
     throw new Error('Allow list error: Invalid source object');
   }
-  const filtered: Record<string, unknown> = {};
 
-  allowed.forEach(field => {
-    if (sourceObj[field] !== undefined) {
-      filtered[field] = sourceObj[field];
-    }
-  });
-
+  const filtered = allowed.reduce((acc, key) => ({ ...acc, [key]: sourceObj[key] }), {});
+  
+  req.sanitized ||= {};
   req.sanitized[object || 'body'] = filtered;
 
   next();
