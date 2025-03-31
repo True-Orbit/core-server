@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
 interface Props {
@@ -6,7 +5,7 @@ interface Props {
   object: string;
 }
 
-export const sanitize =
+export const allowProps =
   ({ allowed = [], object }: Props) =>
   (req: Request, _res: Response, next: NextFunction) => {
     const sourceObj = object ? req.body[object] : req.body;
@@ -17,8 +16,8 @@ export const sanitize =
 
     const filtered = allowed.reduce((acc, key) => ({ ...acc, [key]: sourceObj[key] }), {});
 
-    req.sanitized ||= {};
-    req.sanitized[object || 'body'] = filtered;
+    req.allowed ||= {};
+    req.allowed[object || 'body'] = filtered;
 
     next();
   };

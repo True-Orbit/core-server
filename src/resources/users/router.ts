@@ -2,7 +2,7 @@ import express from 'express';
 import { changeKeys } from '@/utils';
 
 import { dbConnection } from '@/db';
-import { requireUserAuth, requireApiAuth, sanitize, validate } from '@/middleware';
+import { requireUserAuth, requireApiAuth, allowProps, validate } from '@/middleware';
 import { catchErrors } from '@/utils';
 
 import { patchFields, validators } from '.';
@@ -24,11 +24,11 @@ router.patch(
   '/:me',
   requireUserAuth,
   validate(validators.me),
-  sanitize({ allowed: patchFields, object: 'me' }),
+  allowProps({ allowed: patchFields, object: 'me' }),
   catchErrors(async (req, res, next) => {
     try {
       const auth_id = req.authUser?.id;
-      const dbConformed = changeKeys(req.sanitized.me, 'snakeCase');
+      const dbConformed = changeKeys(req.allowed.me, 'snakeCase');
       const [user] = await dbConnection('users')
         .where({ auth_id })
         .update({ ...dbConformed })
