@@ -1,9 +1,8 @@
 import express from 'express';
-import { changeKeys } from '@/utils';
+import { changeKeys, catchErrors } from '@/utils';
 
 import { dbConnection } from '@/db';
 import { requireUserAuth, requireApiAuth, allowProps, validate } from '@/middleware';
-import { catchErrors } from '@/utils';
 
 import { patchFields, validators } from '.';
 

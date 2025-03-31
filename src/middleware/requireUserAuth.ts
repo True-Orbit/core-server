@@ -33,7 +33,6 @@ export const requireUserAuth = (req: Request, res: Response, next: NextFunction)
 
     try {
       const decoded: accessTokenModels.Data = jwt.verify(accessToken, AUTH_SECRET) as accessTokenModels.Data;
-      console.log('decoded: ', decoded);
       req.authUser = decoded;
 
       next();
