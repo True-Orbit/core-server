@@ -4,6 +4,7 @@ import config from '../knexfile';
 import 'dotenv/config';
 
 const NODE_ENV = process.env.NODE_ENV || 'local';
+console.log('config[NODE_ENV]', config[NODE_ENV]);
 const db: Knex = knex(config[NODE_ENV]);
 
 interface ColumnInfo {

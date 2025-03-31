@@ -20,6 +20,23 @@ router.get(
   }),
 );
 
+router.patch(
+  '/:me',
+  requireUserAuth,
+  sanitize({ allowed: patchFields, object: 'me'}),
+  catchErrors(async (req, res, next) => {
+    try {
+      const auth_id = req.authUser?.id;
+      const dbConformed = changeKeys(req.sanitized.me, 'snakeCase');
+      const [user] = await dbConnection('users').where({ auth_id }).update({ ...dbConformed }).returning('*');
+      const jsonConformed = changeKeys(user, 'camelCase');
+      res.send(jsonConformed);
+    } catch (error) {
+      next({ message: "Could not update yourself" })
+    }
+  }),
+);
+
 router.get(
   '/:id',
   requireUserAuth,
@@ -37,19 +54,6 @@ router.post(
     const { authId: auth_id } = req.body.user;
     const user = await dbConnection('users').insert({ auth_id }).returning('*');
     res.send(user);
-  }),
-);
-
-router.patch(
-  '/:id',
-  requireUserAuth,
-  sanitize({ allowed: patchFields, object: 'user'}),
-  catchErrors(async (req, res, _next) => {
-    const dbConformed = changeKeys(req.sanitized.user, 'snakeCase');
-    console.log('dbConformed', dbConformed);
-    const [user] = await dbConnection('users').update(dbConformed).returning('*');
-    const jsonConformed = changeKeys(user, 'camelCase');
-    res.send(jsonConformed);
   }),
 );
 

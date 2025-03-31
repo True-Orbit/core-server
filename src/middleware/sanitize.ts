@@ -6,7 +6,7 @@ interface Props {
   object: string;
 }
 
-export const sanitize = ({ allowed, object }: Props) => (req: Request, res: Response, next: NextFunction) => {
+export const sanitize = ({ allowed = [], object }: Props) => (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -15,7 +15,7 @@ export const sanitize = ({ allowed, object }: Props) => (req: Request, res: Resp
   const sourceObj = !!object ? req.body[object] : req.body;
 
   if (!(sourceObj && typeof sourceObj === 'object')) {
-    throw new Error('Allow list error: Invalid source object');
+    return next({ message: 'Wrong Body Object' });
   }
 
   const filtered = allowed.reduce((acc, key) => ({ ...acc, [key]: sourceObj[key] }), {});
