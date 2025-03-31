@@ -11,14 +11,23 @@ export default [
   ...tseslint.configs.recommended,
   {
     rules: {
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
           "argsIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "caughtErrorsIgnorePattern": "^_",
-        },
+          "varsIgnorePattern": "^_"
+        }
       ],
+      "no-restricted-imports": [
+        "error",
+        {
+          "patterns": ["../../*"]
+        }
+      ],
+
+      "no-duplicate-imports": "error",
     },
   },
 ];
