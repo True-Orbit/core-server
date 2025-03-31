@@ -2,10 +2,10 @@ import express from 'express';
 import { changeKeys } from '@/utils';
 
 import { dbConnection } from '@/db';
-import { requireUserAuth, requireApiAuth, sanitize } from '@/middleware';
+import { requireUserAuth, requireApiAuth, sanitize, validate } from '@/middleware';
 import { catchErrors } from '@/utils';
 
-import { patchFields } from '.';
+import { patchFields, validators } from '.';
 
 const router = express.Router();
 
@@ -23,6 +23,7 @@ router.get(
 router.patch(
   '/:me',
   requireUserAuth,
+  validate(validators.me),
   sanitize({ allowed: patchFields, object: 'me' }),
   catchErrors(async (req, res, next) => {
     try {
@@ -34,7 +35,8 @@ router.patch(
         .returning('*');
       const jsonConformed = changeKeys(user, 'camelCase');
       res.send(jsonConformed);
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       next({ message: 'Could not update yourself' });
     }
   }),
