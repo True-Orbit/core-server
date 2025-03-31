@@ -1,1 +1,1 @@
-export * from "./allowedFields";
+export * from './allowedFields';

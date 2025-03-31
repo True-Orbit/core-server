@@ -1,5 +1,1 @@
-export const patchFields = [
-  "firstName",
-  "lastName",
-  "handle",
-];
+export const patchFields = ['firstName', 'lastName', 'handle'];

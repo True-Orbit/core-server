@@ -23,16 +23,19 @@ router.get(
 router.patch(
   '/:me',
   requireUserAuth,
-  sanitize({ allowed: patchFields, object: 'me'}),
+  sanitize({ allowed: patchFields, object: 'me' }),
   catchErrors(async (req, res, next) => {
     try {
       const auth_id = req.authUser?.id;
       const dbConformed = changeKeys(req.sanitized.me, 'snakeCase');
-      const [user] = await dbConnection('users').where({ auth_id }).update({ ...dbConformed }).returning('*');
+      const [user] = await dbConnection('users')
+        .where({ auth_id })
+        .update({ ...dbConformed })
+        .returning('*');
       const jsonConformed = changeKeys(user, 'camelCase');
       res.send(jsonConformed);
     } catch (error) {
-      next({ message: "Could not update yourself" })
+      next({ message: 'Could not update yourself' });
     }
   }),
 );
