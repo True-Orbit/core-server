@@ -36,7 +36,7 @@ router.patch(
       res.send(jsonConformed);
     } catch (err) {
       console.error(err);
-      next({ message: 'Could not update yourself' });
+      return next({ message: 'Could not update yourself' });
     }
   }),
 );
