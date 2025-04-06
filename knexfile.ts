@@ -23,6 +23,23 @@ const connection = {
 };
 
 const config: { [key: string]: Knex.Config } = {
+  test: {
+    client: 'sqlite3',
+    connection: {
+      filename: './test.sqlite3',
+    },
+    useNullAsDefault: true,
+    migrations,
+    seeds,
+    pool: {
+      // Ensure the database is ready when your tests run
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      afterCreate: (conn: any, done: any) => {
+        conn.run('PRAGMA foreign_keys = ON', done);
+      }
+    }
+  },
+  
   local: {
     client: process.env.DB_CLIENT,
     connection,
