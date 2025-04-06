@@ -91,12 +91,18 @@ const config: Config = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '^@/root/(.*)$': '<rootDir>/$1',
+    '^@/middleware$': '<rootDir>/src/middleware/index.ts',
     '^@/middleware/(.*)$': '<rootDir>/src/middleware/$1',
+    '^@/routes$': '<rootDir>/src/routes/index.ts',
     '^@/routes/(.*)$': '<rootDir>/src/routes/$1',
+    '^@/utils$': '<rootDir>/src/utils/index.ts',
     '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@/resources$': '<rootDir>/src/resources/index.ts',
     '^@/resources/(.*)$': '<rootDir>/src/resources/$1',
+    '^@/db$': '<rootDir>/src/db/index.ts',
     '^@/db/(.*)$': '<rootDir>/src/db/$1',
+    '^@/root$': '<rootDir>/index.ts',
+    '^@/root/(.*)$': '<rootDir>/$1',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
