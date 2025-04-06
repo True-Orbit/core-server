@@ -15,7 +15,7 @@ router.get(
     const auth_id = req.authUser!.id;
     const dbUser = await dbConnection('users').where({ auth_id }).first();
     const user = changeKeys({ ...dbUser, role: req.authUser!.role }, 'camelCase');
-    res.send(user);
+    return res.send(user);
   }),
 );
 
@@ -33,10 +33,10 @@ router.patch(
         .update({ ...dbConformed })
         .returning('*');
       const jsonConformed = changeKeys(user, 'camelCase');
-      res.send(jsonConformed);
+      return res.send(jsonConformed);
     } catch (err) {
       console.error(err);
-      next({ message: 'Could not update yourself' });
+      return next({ message: 'Could not update yourself' });
     }
   }),
 );
@@ -44,20 +44,22 @@ router.patch(
 router.get(
   '/:id',
   requireUserAuth,
-  catchErrors(async (req, res, _next) => {
+  catchErrors(async (req, res, next) => {
     const id = req.params.id;
     const user = await dbConnection('users').where({ id }).first();
-    res.send(user);
+    if (user) return res.send(user);
+    return next({ status: 404, message: 'User not found' });
   }),
 );
 
 router.post(
   '/create',
   requireApiAuth,
+  validate(validators.create),
   catchErrors(async (req, res, _next) => {
     const { authId: auth_id } = req.body.user;
     const user = await dbConnection('users').insert({ auth_id }).returning('*');
-    res.send(user);
+    return res.send(user);
   }),
 );
 

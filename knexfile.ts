@@ -4,7 +4,7 @@ import { type Knex } from 'knex';
 import dotenv from "dotenv";
 dotenv.config();
 
-const caCert = fs.readFileSync(process.env.RDS_PEM_LOCATION || '', 'utf8');
+const caCert = fs.readFileSync(process.env.RDS_PEM_LOCATION || "./config/us-west-2-bundle.pem", 'utf8');
 
 const migrations = {
   directory: './src/db/migrations',
@@ -23,11 +23,27 @@ const connection = {
 };
 
 const config: { [key: string]: Knex.Config } = {
+  test: {
+    client: 'sqlite3',
+    connection: {
+      filename: './test.sqlite3',
+    },
+    useNullAsDefault: true,
+    migrations,
+    seeds,
+    pool: {
+      // Ensure the database is ready when your tests run
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      afterCreate: (conn: any, done: any) => {
+        conn.run('PRAGMA foreign_keys = ON', done);
+      }
+    }
+  },
+  
   local: {
     client: process.env.DB_CLIENT,
     connection,
     migrations,
-    seeds,
   },
 
   development: {
@@ -37,7 +53,6 @@ const config: { [key: string]: Knex.Config } = {
       ssl: { ca: caCert },
     },
     migrations,
-    seeds,
     pool: { min: 2, max: 10 },
   }
 };

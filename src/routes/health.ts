@@ -3,7 +3,7 @@ import { memoryUsage, uptime } from 'process';
 
 const router = express.Router();
 
-router.get('', (req, res, _next) => {
+router.get('', (_req, res, _next) => {
   res.status(200).send({
     status: 'ok',
     message: 'API is healthy',

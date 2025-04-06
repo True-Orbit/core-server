@@ -11,3 +11,5 @@ export const me = [
     .isAlphanumeric()
     .withMessage('Handle must be alphanumeric'),
 ];
+
+export const create = [body('user.authId').trim().escape().notEmpty().withMessage('authId is required')];

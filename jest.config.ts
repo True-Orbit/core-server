@@ -22,7 +22,14 @@ const config: Config = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    "src/**/*.{js,ts,tsx}",
+    "!src/**/index.*",
+    "!src/**/models.*",
+    "!src/types/**",
+    "!src/db/**",
+    "!**/constants.ts",
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -61,10 +68,10 @@ const config: Config = {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  // globalSetup: undefined,
+  globalSetup: '<rootDir>/jest/globalSetup.ts',
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  // globalTeardown: undefined,
+  globalTeardown: '<rootDir>/jest/globalTeardown.ts',
 
   // A set of global variables that need to be available in all test environments
   // globals: {},
@@ -91,12 +98,19 @@ const config: Config = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '^@/root/(.*)$': '<rootDir>/$1',
+    '^@/middleware$': '<rootDir>/src/middleware/index.ts',
     '^@/middleware/(.*)$': '<rootDir>/src/middleware/$1',
+    '^@/routes$': '<rootDir>/src/routes/index.ts',
     '^@/routes/(.*)$': '<rootDir>/src/routes/$1',
+    '^@/utils$': '<rootDir>/src/utils/index.ts',
     '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@/resources$': '<rootDir>/src/resources/index.ts',
     '^@/resources/(.*)$': '<rootDir>/src/resources/$1',
+    '^@/db$': '<rootDir>/src/db/index.ts',
     '^@/db/(.*)$': '<rootDir>/src/db/$1',
+    '^@/root$': '<rootDir>/index.ts',
+    '^@/root/(.*)$': '<rootDir>/$1',
+    '^@/jest/(.*)$': '<rootDir>/jest/$1',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -130,7 +144,7 @@ const config: Config = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  // rootDir: undefined,
+  rootDir: './',
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -141,7 +155,7 @@ const config: Config = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ['<rootDir>/jest/setup.ts'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -157,7 +171,7 @@ const config: Config = {
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
 
   // Adds a location field to test results
   // testLocationInResults: false,
