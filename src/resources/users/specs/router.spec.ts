@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 
-import { createApp } from "@/jest/helpers"
+import { createApp } from '@/jest/helpers';
 import { dbConnection } from '@/db';
 import jwt from 'jsonwebtoken';
 import usersRouter from '../router';
@@ -27,7 +27,7 @@ describe('User Routes', () => {
   beforeAll(async () => {
     app = createApp(usersRouter);
   });
-  
+
   beforeEach(async () => {
     const [user] = await dbConnection('users')
       .insert({
@@ -102,11 +102,13 @@ describe('User Routes', () => {
       const res = await request(app)
         .post('/create')
         .set('x-api-key', `testAuthApiKey`)
-        .send({ user: { 
-          authId: 'authNewUser',
-          first_name: 'Test',
-          last_name: 'User',
-        } });
+        .send({
+          user: {
+            authId: 'authNewUser',
+            first_name: 'Test',
+            last_name: 'User',
+          },
+        });
 
       expect(res.status).toBe(200);
       expect(res.body[0]).toHaveProperty('auth_id', 'authNewUser');

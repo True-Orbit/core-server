@@ -21,11 +21,11 @@ export const requireUserAuth = (req: Request, res: Response, next: NextFunction)
   cors(corsOptions)(req, res, (corsErr) => {
     if (corsErr) {
       console.error('CORS error:', corsErr);
-      return next(corsErr)
+      return next(corsErr);
     }
     const accessToken = req.cookies?.accessToken;
     const csrfToken = req.headers[csrfTokenName] as string;
-    
+
     try {
       jwt.verify(csrfToken, CSRF_SECRET);
     } catch (error) {

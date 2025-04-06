@@ -12,12 +12,12 @@ describe('Health API', () => {
 
   it('should return a healthy API response', async () => {
     const res = await request(app).get('/');
-    
+
     expect(res.status).toBe(200);
-    
+
     expect(res.body).toHaveProperty('status', 'ok');
     expect(res.body).toHaveProperty('message', 'API is healthy');
-    
+
     expect(res.body).toHaveProperty('time');
     const isoTime = new Date(res.body.time).toISOString();
     expect(isoTime).toBe(res.body.time);
