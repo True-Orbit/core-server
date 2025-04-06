@@ -30,4 +30,11 @@ export default [
       "no-duplicate-imports": "error",
     },
   },
+  
+  {
+    files: ["**/*.spec.{js,ts}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  },
 ];
