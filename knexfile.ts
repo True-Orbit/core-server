@@ -44,7 +44,6 @@ const config: { [key: string]: Knex.Config } = {
     client: process.env.DB_CLIENT,
     connection,
     migrations,
-    seeds,
   },
 
   development: {
@@ -54,7 +53,6 @@ const config: { [key: string]: Knex.Config } = {
       ssl: { ca: caCert },
     },
     migrations,
-    seeds,
     pool: { min: 2, max: 10 },
   }
 };

@@ -19,16 +19,18 @@ const corsOptions = {
 
 export const requireUserAuth = (req: Request, res: Response, next: NextFunction) => {
   cors(corsOptions)(req, res, (corsErr) => {
-    if (corsErr) return next(corsErr);
-    const accessToken = req.cookies.accessToken;
+    if (corsErr) {
+      console.error('CORS error:', corsErr);
+      return next(corsErr)
+    }
+    const accessToken = req.cookies?.accessToken;
     const csrfToken = req.headers[csrfTokenName] as string;
-
+    
     try {
-      // just verify that a valid csrf token is present
       jwt.verify(csrfToken, CSRF_SECRET);
     } catch (error) {
       console.error(error);
-      return res.status(401).json({ error: 'Invalid csrf token' });
+      return next({ status: 401, error: 'Invalid csrf token' });
     }
 
     try {
@@ -38,7 +40,7 @@ export const requireUserAuth = (req: Request, res: Response, next: NextFunction)
       next();
     } catch (err) {
       console.error(err);
-      return res.status(401).json({ error: 'Invalid authentication token' });
+      return next({ status: 401, error: 'Invalid authentication token' });
     }
   });
 };

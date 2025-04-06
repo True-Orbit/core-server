@@ -11,7 +11,7 @@ export const allowProps =
     const sourceObj = object ? req.body[object] : req.body;
 
     if (!(sourceObj && typeof sourceObj === 'object')) {
-      return next({ message: 'Wrong Body Object' });
+      return next({ sattus: 400, message: 'Wrong Body Object' });
     }
 
     const filtered = allowed.reduce((acc, key) => ({ ...acc, [key]: sourceObj[key] }), {});

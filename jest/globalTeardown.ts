@@ -1,4 +1,4 @@
-import { dbConnection } from '../src/db';
+import { dbConnection } from '@/db';
 
 export default async () => {
   await dbConnection.migrate.rollback();

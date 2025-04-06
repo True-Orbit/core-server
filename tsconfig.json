@@ -24,9 +24,10 @@
       "@/utils/*": ["./src/utils/*"],
       "@/db": ["./src/db/index.ts"],
       "@/db/*": ["./src/db/*"],
+      "@/jest/*": ["./jest/*"],
     },
     "typeRoots": ["./node_modules/@types", "./types"],
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "knexfile.ts", "types/*.d.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "knexfile.ts", "types/*.d.ts", "jest/**/*.ts"],
   "exclude": ["node_modules", "dist", "coverage"]
 }

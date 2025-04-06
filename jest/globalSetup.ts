@@ -1,5 +1,5 @@
 import 'module-alias/register';
-import { dbConnection } from '../src/db';
+import { dbConnection } from '@/db';
 
 export default async () => {
   await dbConnection.migrate.latest();
