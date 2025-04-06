@@ -4,7 +4,7 @@ import { type Knex } from 'knex';
 import dotenv from "dotenv";
 dotenv.config();
 
-const caCert = fs.readFileSync(process.env.RDS_PEM_LOCATION || '', 'utf8');
+const caCert = fs.readFileSync(process.env.RDS_PEM_LOCATION || "./config/us-west-2-bundle.pem", 'utf8');
 
 const migrations = {
   directory: './src/db/migrations',
