@@ -44,16 +44,18 @@ router.patch(
 router.get(
   '/:id',
   requireUserAuth,
-  catchErrors(async (req, res, _next) => {
+  catchErrors(async (req, res, next) => {
     const id = req.params.id;
     const user = await dbConnection('users').where({ id }).first();
-    return res.send(user);
+    if (user) return res.send(user);
+    return next({ status: 404, message: 'User not found' });
   }),
 );
 
 router.post(
   '/create',
   requireApiAuth,
+  validate(validators.create),
   catchErrors(async (req, res, _next) => {
     const { authId: auth_id } = req.body.user;
     const user = await dbConnection('users').insert({ auth_id }).returning('*');

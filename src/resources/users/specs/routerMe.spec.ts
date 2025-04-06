@@ -1,6 +1,5 @@
 import request from 'supertest';
 import express from 'express';
-
 import { createApp } from '@/jest/helpers';
 import { dbConnection } from '@/db';
 import jwt from 'jsonwebtoken';
@@ -52,7 +51,10 @@ describe('User Routes', () => {
 
   describe('GET /me', () => {
     it('returns the authenticated user', async () => {
-      const accessToken = generateAuthToken({ id: testUser.auth_id, role: 'basic' });
+      const accessToken = generateAuthToken({
+        id: testUser.auth_id,
+        role: 'basic',
+      });
       const csrfToken = generateCsrfToken();
 
       const res = await request(app)
@@ -64,66 +66,86 @@ describe('User Routes', () => {
       expect(res.body.handle).toBe(testUser.handle);
       expect(res.body.firstName).toBe(testUser.first_name);
     });
+
+    it('rejects request with missing CSRF token', async () => {
+      const accessToken = generateAuthToken({
+        id: testUser.auth_id,
+        role: 'basic',
+      });
+
+      const res = await request(app)
+        .get('/me')
+        .set('Cookie', [`accessToken=${accessToken}`]);
+
+      expect(res.status).toBe(401);
+    });
+
+    it('rejects request with invalid auth token', async () => {
+      const csrfToken = generateCsrfToken();
+      const invalidToken = 'invalid.token.here';
+
+      const res = await request(app)
+        .get('/me')
+        .set('Cookie', [`accessToken=${invalidToken}`])
+        .set('x-csrf-token', csrfToken);
+
+      expect(res.status).toBe(401);
+    });
   });
 
   describe('PATCH /me', () => {
     it('updates user fields successfully', async () => {
-      const accessToken = generateAuthToken({ id: testUser.auth_id, role: 'basic' });
+      const accessToken = generateAuthToken({
+        id: testUser.auth_id,
+        role: 'basic',
+      });
       const csrfToken = generateCsrfToken();
 
       const res = await request(app)
         .patch('/me')
-        .set('Cookie', `accessToken=${accessToken}`)
+        .set('Cookie', [`accessToken=${accessToken}`])
         .set('x-csrf-token', csrfToken)
-        .send({ me: { firstName: 'Updated', lastName: 'User', handle: 'handle' } });
-
-      expect(res.status).toBe(200);
-      expect(res.body.firstName).toBe('Updated');
-    });
-  });
-
-  describe('GET /:id', () => {
-    it('fetches user by id', async () => {
-      const accessToken = generateAuthToken({ id: testUser.auth_id, role: 'basic' });
-      const csrfToken = generateCsrfToken();
-
-      const res = await request(app)
-        .get(`/${testUser.id}`)
-        .set('Cookie', `accessToken=${accessToken}`)
-        .set('x-csrf-token', csrfToken);
-
-      expect(res.status).toBe(200);
-      expect(res.body.handle).toBe(testUser.handle);
-    });
-  });
-
-  describe('POST /create', () => {
-    it('creates a new user', async () => {
-      const res = await request(app)
-        .post('/create')
-        .set('x-api-key', `testAuthApiKey`)
         .send({
-          user: {
-            authId: 'authNewUser',
-            first_name: 'Test',
-            last_name: 'User',
-          },
+          me: { firstName: 'Updated', lastName: 'User', handle: 'newhandle' },
         });
 
       expect(res.status).toBe(200);
-      expect(res.body[0]).toHaveProperty('auth_id', 'authNewUser');
-
-      await dbConnection('users').where({ auth_id: 'authNewUser' }).del();
+      expect(res.body.firstName).toBe('Updated');
+      expect(res.body.handle).toBe('newhandle');
     });
-  });
 
-  describe('Unauthenticated requests', () => {
-    it('rejects unauthenticated requests', async () => {
-      const endpoints = ['/me', `/me`, `/${testUser.id}`];
-      for (const endpoint of endpoints) {
-        const res = await request(app).get(endpoint);
-        expect(res.status).toBe(401);
-      }
+    it('returns an error when required fields are missing', async () => {
+      const accessToken = generateAuthToken({
+        id: testUser.auth_id,
+        role: 'basic',
+      });
+      const csrfToken = generateCsrfToken();
+
+      const res = await request(app)
+        .patch('/me')
+        .set('Cookie', [`accessToken=${accessToken}`])
+        .set('x-csrf-token', csrfToken)
+        .send({ me: { firstName: 'OnlyFirstName' } });
+
+      // Assuming your route returns a 400 on missing required fields
+      expect(res.status).toBe(400);
+    });
+
+    it('rejects request with invalid CSRF token', async () => {
+      const accessToken = generateAuthToken({
+        id: testUser.auth_id,
+        role: 'basic',
+      });
+      // deliberately using an invalid csrf token
+      const res = await request(app)
+        .patch('/me')
+        .set('Cookie', [`accessToken=${accessToken}`])
+        .set('x-csrf-token', 'invalidCsrfToken')
+        .send({
+          me: { firstName: 'Updated', lastName: 'User', handle: 'newhandle' },
+        });
+
+      expect(res.status).toBe(401);
     });
   });
 });

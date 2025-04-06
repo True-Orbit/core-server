@@ -6,5 +6,5 @@ export const validate =
   async (req: Request, _res: Response, next: NextFunction) => {
     await Promise.allSettled(validators.map(async (validator) => await validator.run(req)));
     const errors = validationResult(req);
-    errors.isEmpty() ? next() : next({ message: errors.array() });
+    errors.isEmpty() ? next() : next({ status: 400, message: errors.array() });
   };
